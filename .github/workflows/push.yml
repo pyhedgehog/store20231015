@@ -12,10 +12,11 @@ jobs:
       - name: Push to Store
         run: |
           for f in extensions/*.json ; do
-            curl --fail-with-body -H "Authorization: Bearer ${SALTCORN_TOKEN}" -XPOST -H 'Content-Type: application/json' --data "@$f" ${SALTCORN_URL:-http://store.saltcorn.com}/api/action/update_ext
+            curl --fail-with-body -H "Authorization: Bearer ${SALTCORN_TOKEN}" -XPOST -H 'Content-Type: application/json' --data "@$f" "${SALTCORN_URL:-http://store.saltcorn.com}/api/action/update_ext"
           done
           for f in packs/*.json ; do
-            curl --fail-with-body -H "Authorization: Bearer ${SALTCORN_TOKEN}" -XPOST -H 'Content-Type: application/json' --data "@$f" ${SALTCORN_URL:-http://store.saltcorn.com}/api/action/update_pack
+            curl --fail-with-body -H "Authorization: Bearer ${SALTCORN_TOKEN}" -XPOST -H 'Content-Type: application/json' --data "@$f" "${SALTCORN_URL:-http://store.saltcorn.com}/api/action/update_pack"
           done
         env:
-          SALTCORN_URL: '${{ secrets.SALTCORN_URL }}'
+          SALTCORN_TOKEN: '${{ secrets.SALTCORN_TOKEN }}'
+          SALTCORN_URL: '${{ vars.SALTCORN_URL }}'
